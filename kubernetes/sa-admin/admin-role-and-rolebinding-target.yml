@@ -1,0 +1,22 @@
+apiVersion: rbac.authorization.k8s.io/v1 # permisos de un rol a un namespace o varios.
+kind: Role
+metadata:
+  name: admin-role
+  namespace: default # Solo aplica a este namespace
+rules:
+- apiGroups: [ "*" ]
+  resources: [ "*" ]
+  verbs: [ "*" ]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: admin-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: admin-role
+subjects:
+- namespace: default
+  kind: ServiceAccount
+  name: admin-service-account
