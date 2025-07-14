@@ -37,5 +37,5 @@ variable "startup_schedule" {
 variable "shutdown_schedule" {
   description = "Horario cron para apagar la VM."
   type        = string
-  default     = "0 0 * * *"
+  default     = "0 3 * * *"
 }

@@ -33,7 +33,7 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin d
 #snap certbot
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot --nginx --staging --non-interactive --agree-tos --domains ${domain} --email carlosmarind@gmail.com
+sudo certbot --nginx --non-interactive --agree-tos --domains ${domain} --email carlosmarind@gmail.com
 
 #configuracion host
 sudo usermod -aG sudo,docker jenkins

@@ -53,16 +53,20 @@ resource "google_container_cluster" "primary" {
   }
 }
 
-resource "google_container_node_pool" "primary_preemptible_nodes" {
+resource "google_container_node_pool" "primary_nodes" {
   name       = var.gke_options.node_pool_name
   location   = var.zone
   cluster    = google_container_cluster.primary.name
-  node_count = 1
+  node_count = var.gke_options.node_pool_count
 
   node_config {
     preemptible  = false
     machine_type = var.gke_options.node_pool_vm_type
-
+    disk_type    = var.gke_options.node_pool_disk_type # Cambia el tipo de disco: "pd-standard", "pd-balanced" o "pd-ssd"
+    disk_size_gb = var.gke_options.node_pool_disk_size # Cambia el tamaño del disco en GB
+    resource_labels = {
+      "schedule-group" = "${var.gke_options.node_pool_name}-group"
+    }
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     service_account = google_service_account.sa-k8-lab.email
     oauth_scopes = [

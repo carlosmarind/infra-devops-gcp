@@ -8,7 +8,7 @@ NAMESPACE="default"
 SERVER=$(gcloud container clusters describe $CLUSTER_NAME --region $REGION --format="value(endpoint)")
 echo "La url del server es: https://$SERVER"
 
-gcloud container clusters describe $CLUSTER_NAME --region $REGION --format="value(masterAuth.clusterCaCertificate)" | base64 --decode > ca.crt
+gcloud container clusters describe $CLUSTER_NAME --region $REGION --format="value(masterAuth.clusterCaCertificate)" | base64 --decode > output/ca.crt
 echo "Descargado el certificado del cluster"
 
 kubectl get secrets -n $NAMESPACE | grep $SA_NAME
@@ -17,7 +17,7 @@ TOKEN=$(kubectl get secret admin-sa-secret -n $NAMESPACE -o jsonpath='{.data.tok
 echo "token descargado"
 
 echo "creando config kubeconfig-ci"
-cat <<EOF > kubeconfig-ci
+cat <<EOF > output/kubeconfig-ci
 apiVersion: v1
 kind: Config
 clusters:
